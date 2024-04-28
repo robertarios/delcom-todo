@@ -3,83 +3,68 @@ package com.ifs21024.delcomtodo.presentation.lostandfound
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.ifs21024.delcomtodo.data.local.entity.DelcomLostFoundEntity
 import com.ifs21024.delcomtodo.data.remote.MyResult
 import com.ifs21024.delcomtodo.data.remote.response.DataAddLostFoundResponse
 import com.ifs21024.delcomtodo.data.remote.response.DelcomLostFoundResponse
+import com.ifs21024.delcomtodo.data.remote.response.DelcomLostFoundsResponse
 import com.ifs21024.delcomtodo.data.remote.response.DelcomResponse
-import com.ifs21024.delcomtodo.data.repository.LocalLostFoundRepository
+import com.ifs21024.delcomtodo.data.repository.LostRepository
 import com.ifs21024.delcomtodo.presentation.ViewModelFactory
 
-class LostFoundViewModel(
-    private val lostfoundRepository: LostFoundRepository,
-    private val localLostFoundRepository: LocalLostFoundRepository
+class LostfoundViewModel(
+    private val lostRepository: LostRepository
 ) : ViewModel() {
-
-    fun getLostFound(lostfoundId: Int): LiveData<MyResult<DelcomLostFoundResponse>>{
-        return lostfoundRepository.getLostFound(lostfoundId).asLiveData()
+    fun getLostfounds(
+        isCompleted: Int?,
+        userId: Int?,
+        status: String,
+    ): LiveData<MyResult<DelcomLostFoundsResponse>> {
+        return lostRepository.getLostfounds(isCompleted,userId,status, ).asLiveData()
     }
-
-    fun postLostFound(
+    fun getLostfound(lostFoundId: Int): LiveData<MyResult<DelcomLostFoundResponse>>{
+        return lostRepository.getLostfound(lostFoundId).asLiveData()
+    }
+    fun postLostfound(
         title: String,
         description: String,
-        status: String
+        status: String,
     ): LiveData<MyResult<DataAddLostFoundResponse>>{
-        return lostfoundRepository.postLostFound(
+        return lostRepository.postLostfound(
             title,
             description,
             status
         ).asLiveData()
     }
-
-    fun putLostFound(
-        lostfoundId: Int,
+    fun putLostfound(
+        lostFoundId: Int,
         title: String,
         description: String,
         status: String,
         isCompleted: Boolean,
     ): LiveData<MyResult<DelcomResponse>> {
-        return lostfoundRepository.putLostFound(
-            lostfoundId,
+        return lostRepository.putLostfound(
+            lostFoundId,
             title,
             description,
             status,
             isCompleted,
         ).asLiveData()
     }
-
-    fun deleteLostFound(lostfoundId: Int): LiveData<MyResult<DelcomResponse>> {
-        return lostfoundRepository.deleteLostFound(lostfoundId).asLiveData()
+    fun deleteLostfound(lostFoundId: Int): LiveData<MyResult<DelcomResponse>> {
+        return lostRepository.deleteLostfound(lostFoundId).asLiveData()
     }
-
-    fun getLocalLostFounds(): LiveData<List<DelcomLostFoundEntity>?> {
-        return localLostFoundRepository.getAllLostFounds()
-    }
-
-    fun getLocalLostFound(lostfoundId: Int): LiveData<DelcomLostFoundEntity?> {
-        return localLostFoundRepository.get(lostfoundId)
-    }
-    fun insertLocalLostFound(lostfound: DelcomLostFoundEntity) {
-        localLostFoundRepository.insert(lostfound)
-    }
-    fun deleteLocalLostFound(lostfound: DelcomLostFoundEntity) {
-        localLostFoundRepository.delete(lostfound)
-    }
-
     companion object {
         @Volatile
-        private var INSTANCE: LostFoundViewModel? = null
+        private var INSTANCE: LostfoundViewModel? = null
         fun getInstance(
-            lostfoundRepository: LostFoundRepository,
-            localLostFoundRepository: LocalLostFoundRepository,
-        ): LostFoundViewModel {
+            lostRepository: LostRepository
+        ): LostfoundViewModel {
             synchronized(ViewModelFactory::class.java) {
-                INSTANCE = LostFoundViewModel(
-                    lostfoundRepository,
-                    localLostFoundRepository
+                INSTANCE = LostfoundViewModel(
+                    lostRepository
                 )
             }
-            return INSTANCE as LostFoundViewModel
+            return INSTANCE as LostfoundViewModel
         }
     }
 }

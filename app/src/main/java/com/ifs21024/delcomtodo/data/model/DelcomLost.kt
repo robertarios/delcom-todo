@@ -10,5 +10,4 @@ data class DelcomLost(
     val description: String,
     val status: String,
     var isComplete: Boolean,
-    val cover: String?,
 ) : Parcelable
