@@ -3,7 +3,6 @@ package com.ifs21024.delcomtodo.data.remote.response
 import com.google.gson.annotations.SerializedName
 
 data class DelcomTodosResponse(
-
 	@field:SerializedName("data")
 	val data: DataTodosResponse,
 
@@ -15,7 +14,6 @@ data class DelcomTodosResponse(
 )
 
 data class TodosItemResponse(
-
 	@field:SerializedName("cover")
 	val cover: String?,
 
@@ -35,11 +33,21 @@ data class TodosItemResponse(
 	val title: String,
 
 	@field:SerializedName("is_finished")
-	var isFinished: Int
+  var isFinished: Int
 )
 
 data class DataTodosResponse(
-
 	@field:SerializedName("todos")
 	val todos: List<TodosItemResponse>
 )
+
+
+
+
+
+
+
+
+
+
+

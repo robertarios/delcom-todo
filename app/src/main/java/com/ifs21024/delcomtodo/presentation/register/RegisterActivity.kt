@@ -16,27 +16,34 @@ class RegisterActivity : AppCompatActivity() {
     private val viewModel by viewModels<RegisterViewModel> {
         ViewModelFactory.getInstance(this)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         setupView()
         setupAction()
     }
+
     private fun setupView(){
         showLoading(false)
     }
+
     private fun setupAction(){
         binding.apply {
+
             // Memberikan aksis jika text ke tampilan login dipilih
             tvRegisterToLogin.setOnClickListener {
                 openLoginActivity()
             }
+
             // Memberikan aksi jika tombol Register dipilih
             btnRegister.setOnClickListener {
                 val name = etRegisterName.text.toString()
                 val email = etRegisterEmail.text.toString()
                 val password = etRegisterPassword.text.toString()
+
                 if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
                     AlertDialog.Builder(this@RegisterActivity).apply {
                         setTitle("Oh No!")
@@ -47,10 +54,13 @@ class RegisterActivity : AppCompatActivity() {
                     }
                     return@setOnClickListener
                 }
+
                 observeRegister(name, email, password)
             }
+
         }
     }
+
     private fun observeRegister(name: String, email: String, password: String){
         viewModel.register(
             name,
@@ -62,8 +72,10 @@ class RegisterActivity : AppCompatActivity() {
                     is MyResult.Loading -> {
                         showLoading(true)
                     }
+
                     is MyResult.Success -> {
                         showLoading(false)
+
                         AlertDialog.Builder(this).apply {
                             setTitle("Yeah!")
                             setMessage(result.data.message)
@@ -75,8 +87,10 @@ class RegisterActivity : AppCompatActivity() {
                             show()
                         }
                     }
+
                     is MyResult.Error -> {
                         showLoading(false)
+
                         AlertDialog.Builder(this).apply {
                             setTitle("Oh No!")
                             setMessage(result.error)
@@ -89,11 +103,13 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun showLoading(isLoading: Boolean) {
         binding.pbRegister.visibility = if (isLoading) View.VISIBLE else View.GONE
         binding.btnRegister.isActivated = !isLoading
         binding.btnRegister.text = if (isLoading) "" else "Register"
     }
+
     private fun openLoginActivity(){
         val intent = Intent(applicationContext, LoginActivity::class.java)
         intent.flags =
@@ -101,4 +117,5 @@ class RegisterActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
 }

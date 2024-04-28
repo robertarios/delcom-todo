@@ -14,10 +14,16 @@ data class DelcomTodoResponse(
 	val message: String
 )
 
+data class DataTodoResponse(
+
+	@field:SerializedName("todo")
+	val todo: TodoResponse
+)
+
 data class TodoResponse(
 
 	@field:SerializedName("cover")
-	val cover: String,
+	val cover: String?,
 
 	@field:SerializedName("updated_at")
 	val updatedAt: String,
@@ -36,10 +42,4 @@ data class TodoResponse(
 
 	@field:SerializedName("is_finished")
 	val isFinished: Int
-)
-
-data class DataTodoResponse(
-
-	@field:SerializedName("todo")
-	val todo: TodoResponse
 )

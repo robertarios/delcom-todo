@@ -10,18 +10,22 @@ import com.ifs21024.delcomtodo.data.repository.AuthRepository
 import com.ifs21024.delcomtodo.data.repository.UserRepository
 import com.ifs21024.delcomtodo.presentation.ViewModelFactory
 import kotlinx.coroutines.launch
+
 class ProfileViewModel(
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository
 ) : ViewModel() {
+
     fun logout() {
         viewModelScope.launch {
             authRepository.logout()
         }
     }
+
     fun getMe(): LiveData<MyResult<DataUserResponse>> {
         return userRepository.getMe().asLiveData()
     }
+
     companion object {
         @Volatile
         private var INSTANCE: ProfileViewModel? = null

@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.ifs21024.delcomtodo", appContext.packageName)
+        assertEquals("com.ifs21049.delcomtodo", appContext.packageName)
     }
 }

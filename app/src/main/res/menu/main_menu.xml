@@ -7,10 +7,6 @@
             android:title="Profile"
             app:showAsAction="never" />
         <item
-            android:id="@+id/mainMenuLnF"
-            android:title="Lost and Found"
-            app:showAsAction="never" />
-        <item
             android:id="@+id/mainMenuFavoriteTodos"
             android:title="Favorite Todos"
             app:showAsAction="never" />

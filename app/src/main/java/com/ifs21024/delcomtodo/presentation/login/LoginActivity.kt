@@ -14,31 +14,38 @@ import com.ifs21024.delcomtodo.presentation.ViewModelFactory
 import com.ifs21024.delcomtodo.presentation.main.MainActivity
 import com.ifs21024.delcomtodo.presentation.register.RegisterActivity
 import kotlinx.coroutines.launch
+
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val viewModel by viewModels<LoginViewModel> {
         ViewModelFactory.getInstance(this)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         setupView()
         setupAction()
     }
+
     private fun setupView(){
         showLoading(false)
     }
+
     private fun setupAction(){
         binding.apply {
             // Memberikan aksis jika text ke tampilan register dipilih
             tvLoginToRegister.setOnClickListener {
                 openRegisterActivity()
             }
+
             // Memberikan aksi jika tombol Login dipilih
             btnLogin.setOnClickListener {
                 val email = etLoginEmail.text.toString()
                 val password = etLoginPassword.text.toString()
+
                 if (email.isEmpty() || password.isEmpty()) {
                     AlertDialog.Builder(this@LoginActivity).apply {
                         setTitle("Oh No!")
@@ -49,10 +56,12 @@ class LoginActivity : AppCompatActivity() {
                     }
                     return@setOnClickListener
                 }
+
                 observeLogin(email, password)
             }
         }
     }
+
     private fun observeLogin(email: String, password: String){
         viewModel.login(
             email,
@@ -63,6 +72,7 @@ class LoginActivity : AppCompatActivity() {
                     is MyResult.Loading -> {
                         showLoading(true)
                     }
+
                     is MyResult.Success -> {
                         showLoading(false)
                         lifecycleScope.launch {
@@ -72,8 +82,10 @@ class LoginActivity : AppCompatActivity() {
                                 }
                         }
                     }
+
                     is MyResult.Error -> {
                         showLoading(false)
+
                         AlertDialog.Builder(this).apply {
                             setTitle("Oh No!")
                             setMessage(result.error)
@@ -86,18 +98,22 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun showLoading(isLoading: Boolean) {
         binding.pbLogin.visibility = if (isLoading) View.VISIBLE else View.GONE
         binding.btnLogin.isActivated = !isLoading
         binding.btnLogin.text = if (isLoading) "" else "Login"
     }
+
     private fun openRegisterActivity(){
         val intent = Intent(applicationContext, RegisterActivity::class.java)
         intent.flags =
             Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
         startActivity(intent)
         finish()
     }
+
     private fun openMainActivity(){
         val intent = Intent(applicationContext, MainActivity::class.java)
         intent.flags =

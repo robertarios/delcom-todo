@@ -14,15 +14,6 @@ data class DelcomLoginResponse(
 	val message: String
 )
 
-data class DataLoginResponse(
-
-	@field:SerializedName("user")
-	val user: UserLoginResponse,
-
-	@field:SerializedName("token")
-	val token: String
-)
-
 data class UserLoginResponse(
 
 	@field:SerializedName("updated_at")
@@ -42,4 +33,13 @@ data class UserLoginResponse(
 
 	@field:SerializedName("email")
 	val email: String
+)
+
+data class DataLoginResponse(
+
+	@field:SerializedName("user")
+	val user: UserLoginResponse,
+
+	@field:SerializedName("token")
+	val token: String
 )

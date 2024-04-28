@@ -21,7 +21,6 @@ class Utils {
             }
             observeForever(observerWrapper)
         }
-
         fun entitiesToResponses(entities: List<DelcomTodoEntity>):
                 List<TodosItemResponse> {
             val responses = ArrayList<TodosItemResponse>()
@@ -35,11 +34,9 @@ class Utils {
                     title = it.title,
                     isFinished = it.isFinished
                 )
-
                 responses.add(response)
             }
             return responses
         }
-
     }
 }

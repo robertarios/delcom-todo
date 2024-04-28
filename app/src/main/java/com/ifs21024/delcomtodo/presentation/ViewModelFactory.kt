@@ -24,31 +24,27 @@ class ViewModelFactory(
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
+
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 RegisterViewModel
                     .getInstance(authRepository) as T
             }
-
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel
                     .getInstance(authRepository) as T
             }
-
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 MainViewModel
                     .getInstance(authRepository, todoRepository) as T
             }
-
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
                 ProfileViewModel
                     .getInstance(authRepository, userRepository) as T
             }
-
             modelClass.isAssignableFrom(TodoViewModel::class.java) -> {
                 TodoViewModel
                     .getInstance(todoRepository, localTodoRepository) as T
             }
-
             else -> throw IllegalArgumentException(
                 "Unknown ViewModel class: " + modelClass.name
             )

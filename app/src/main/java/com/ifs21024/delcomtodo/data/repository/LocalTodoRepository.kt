@@ -7,7 +7,6 @@ import com.ifs21024.delcomtodo.data.local.room.DelcomTodoDatabase
 import com.ifs21024.delcomtodo.data.local.room.IDelcomTodoDao
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-
 class LocalTodoRepository(context: Context) {
     private val mDelcomTodoDao: IDelcomTodoDao
     private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
@@ -16,17 +15,13 @@ class LocalTodoRepository(context: Context) {
         mDelcomTodoDao = db.delcomTodoDao()
     }
     fun getAllTodos(): LiveData<List<DelcomTodoEntity>?> = mDelcomTodoDao.getAllTodos()
-
     fun get(todoId: Int): LiveData<DelcomTodoEntity?> = mDelcomTodoDao.get(todoId)
-
     fun insert(todo: DelcomTodoEntity) {
         executorService.execute { mDelcomTodoDao.insert(todo) }
     }
-
     fun delete(todo: DelcomTodoEntity) {
         executorService.execute { mDelcomTodoDao.delete(todo) }
     }
-
     companion object {
         @Volatile
         private var INSTANCE: LocalTodoRepository? = null
@@ -41,5 +36,4 @@ class LocalTodoRepository(context: Context) {
             return INSTANCE as LocalTodoRepository
         }
     }
-
 }

@@ -12,21 +12,26 @@ import com.ifs21024.delcomtodo.data.repository.AuthRepository
 import com.ifs21024.delcomtodo.data.repository.TodoRepository
 import com.ifs21024.delcomtodo.presentation.ViewModelFactory
 import kotlinx.coroutines.launch
+
 class MainViewModel(
     private val authRepository: AuthRepository,
     private val todoRepository: TodoRepository
 ) : ViewModel() {
+
     fun getSession(): LiveData<UserModel> {
         return authRepository.getSession().asLiveData()
     }
+
     fun logout() {
         viewModelScope.launch {
             authRepository.logout()
         }
     }
+
     fun getTodos(): LiveData<MyResult<DelcomTodosResponse>> {
         return todoRepository.getTodos(null).asLiveData()
     }
+
     fun putTodo(
         todoId: Int,
         title: String,
@@ -40,6 +45,7 @@ class MainViewModel(
             isFinished,
         ).asLiveData()
     }
+
     companion object {
         @Volatile
         private var INSTANCE: MainViewModel? = null

@@ -9,13 +9,10 @@ import com.ifs21024.delcomtodo.data.local.entity.DelcomTodoEntity
 @Database(entities = [DelcomTodoEntity::class], version = 1, exportSchema = false)
 abstract class DelcomTodoDatabase : RoomDatabase() {
     abstract fun delcomTodoDao(): IDelcomTodoDao
-
     companion object {
         private const val Database_NAME = "DelcomTodo.db"
-
         @Volatile
         private var INSTANCE: DelcomTodoDatabase? = null
-
         @JvmStatic
         fun getInstance(context: Context): DelcomTodoDatabase {
             if (INSTANCE == null) {

@@ -20,7 +20,6 @@ import com.ifs21024.delcomtodo.databinding.ActivityMainBinding
 import com.ifs21024.delcomtodo.helper.Utils.Companion.observeOnce
 import com.ifs21024.delcomtodo.presentation.ViewModelFactory
 import com.ifs21024.delcomtodo.presentation.login.LoginActivity
-import com.ifs21024.delcomtodo.presentation.lostandfound.LostfoundActivity
 import com.ifs21024.delcomtodo.presentation.profile.ProfileActivity
 import com.ifs21024.delcomtodo.presentation.todo.TodoDetailActivity
 import com.ifs21024.delcomtodo.presentation.todo.TodoFavoriteActivity
@@ -158,6 +157,7 @@ class MainActivity : AppCompatActivity() {
                     isChecked: Boolean
                 ) {
                     adapter.filter(binding.svMain.query.toString())
+
                     viewModel.putTodo(
                         todo.id,
                         todo.title,
@@ -265,14 +265,6 @@ class MainActivity : AppCompatActivity() {
         )
         intent.putExtra(TodoManageActivity.KEY_IS_ADD, true)
         launcher.launch(intent)
-    }
-
-    private fun openLFActivity() {
-        val intent = Intent(applicationContext, LostfoundActivity::class.java)
-        intent.flags =
-            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
-        finish()
     }
 
     private fun openFavoriteTodoActivity() {
